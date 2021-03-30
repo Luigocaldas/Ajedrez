@@ -109,5 +109,34 @@ public class ChessMain {
         System.out.println(inputs);
 
     }
+        public static void Mostrar(String nombre1, String nombre2){
+        int it=16;
+        for(int y = 16; y < inputs.size()-2; y++){            
+            System.out.println("Jugada "+(it-15)+" ficha blanca - "+nombre1+": "+inputs.get(it)+" ficha negra - "+nombre2+": "+inputs.get(it+1));
+            it=y+2;
+        }
+    }
+    
+    public static void UnaJugada(String Nombre1, String Nombre2){
+        System.out.println("Ingrese el número de la partida que desea ver:");
+        int una = reader.nextInt();
+        String jugadaBlanca;
+        String jugadaNegra;
+         switch (una) {
+            case 1:
+                jugadaBlanca=inputs.get(16);
+                jugadaNegra=inputs.get(17);
+                break;
+            case 2:
+                jugadaBlanca=inputs.get(18);
+                jugadaNegra=inputs.get(19);
+                break;
+            default:
+                jugadaBlanca=inputs.get((16 + (2 * una - 2)));
+                jugadaNegra=inputs.get((16 + (2 * una - 1)));
+                break;
+        }
+         System.out.println("Fichas Blancas - "+Nombre1+" :"+jugadaBlanca+". Fichas negras - "+ Nombre2+" :"+jugadaNegra);
+    }
     
 }
