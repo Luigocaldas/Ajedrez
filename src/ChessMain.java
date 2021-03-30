@@ -67,6 +67,7 @@ public class ChessMain {
                     k = true;
                     break;
                 case 4:                    
+                    AdicionRonda();
                     k = true;
                     break;
                 case 5:                    
@@ -81,6 +82,32 @@ public class ChessMain {
                     break;
             }
         }
+    }
+    public static void AdicionRonda() {
+        System.out.println("Ingrese el número de la partida a adicionar:");
+        int partida = reader.nextInt();
+        System.out.println("Ingrese la jugada de fichas blancas:");
+        String njugadab = reader.next();
+        System.out.println("Ingrese la jugada de fichas negras:");
+        String njugadan = reader.next();
+
+        switch (partida) {
+            case 1:
+                inputs.add(16, njugadab);
+                inputs.add(17, njugadan);
+                break;
+            case 2:
+                inputs.add(18, njugadab);
+                inputs.add(19, njugadan);
+                break;
+            default:
+                inputs.add((16 + (2 * partida - 2)), njugadab);
+                inputs.add((16 + (2 * partida - 1)), njugadan);
+                break;
+        }
+
+        System.out.println(inputs);
+
     }
     
 }
