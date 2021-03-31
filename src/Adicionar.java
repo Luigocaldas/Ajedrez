@@ -291,7 +291,9 @@ public class Adicionar {
                 }
             }
         }
-        String ultima = arreglo.get(arreglo.size()-1);        
+        
+        
+        String ultima = arreglo.get(arreglo.size()- 1);        
         if ("1-0".equals(ultima)){
             conteo[0][0]=kn+1;
         }if("0-1".equals(ultima)){
