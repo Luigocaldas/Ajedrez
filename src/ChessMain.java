@@ -185,7 +185,7 @@ public class ChessMain {
            System.out.println("----------------------------------");
            for (int i=16; i <= (inputs.size() - 2) ; i+=2){
                System.out.println("++++++++++++++++++++++++++");
-               System.out.println(ronda + ". " + inputs.get(i) + " " + inputs.get(i + 2));
+               System.out.println(ronda + ". " + inputs.get(i) + " " + inputs.get(i + 1));
                ronda += 1 ;
            }
            System.out.println("----------------------------------");
