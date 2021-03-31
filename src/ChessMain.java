@@ -4,16 +4,48 @@ import java.util.Arrays;
 
 public class ChessMain {
 
-    static Scanner reader = new Scanner(System.in);
-    static ArrayList<String> inputs = new ArrayList<>();
+    public static Scanner reader = new Scanner(System.in);
+    public static Scanner reader2 = new Scanner(System.in);
+    public static ArrayList<String> inputs = new ArrayList<>();
+    public static String jugador_blancas;
+    public static String jugador_negras;
+    
     
     public static void main(String[] args) {
-        System.out.println("Ingrese nombre de jugador 1 (Fichas blancas):");
-        reader.useDelimiter("\n");
-        String Jugador1 = reader.next();
-        System.out.println("Ingrese nombre de jugador 2 (Fichas negras):");
-        reader.useDelimiter("\n");
-        String Jugador2 = reader.next();
+        String nombre1 = "";
+        String nombre2 = ""; 
+        String color1  = "";
+        String color2  = "";
+        System.out.println();
+        System.out.println("--------------------------------------------");
+        System.out.println("bienvenido al anotador de jugadas de ajedrez");
+        System.out.println("Ingrese el nombre del primer jugador:");
+        reader2.useDelimiter("\n");
+        nombre1 = reader2.next();
+        System.out.println("eliga por favor un color de fichas para " + nombre1 );
+        System.out.println("B--> Fichas blancas");
+        System.out.println("N--> Fichas negras");
+        
+        color1 = reader.next();
+        color1 = color1.toUpperCase(); //En caso de que se ingrese en mayúscula
+        if(color1.equals("B")){
+            jugador_blancas = nombre1;
+            color2 = "N";
+        } else if(color1.equals("N")){
+            jugador_negras = nombre1;
+            color2 = "B";
+        }
+        
+        System.out.println("Ingrese el nombre del segundo jugador:");
+        reader2.useDelimiter("\n");
+        nombre2 = reader2.next();
+        System.out.println("--------------------------------------------");
+        if(color2.equals("B")){
+            jugador_blancas = nombre2;
+        }else if(color2.equals("N")){
+            jugador_negras = nombre2;
+        }
+        
 //        ArrayList<String> inputs1 = new ArrayList<>();
 
         boolean k = true;
@@ -35,7 +67,8 @@ public class ChessMain {
         inputs.add("Rh8");
         System.out.println("SI EL JUEGO APENAS EMPIEZA, POR FAVOR ESCOGER 1");
         while (k) {
-            //Mensajes en consola 
+            //Mensajes en consola
+            System.out.println("--------------------------------------------");
             System.out.println("menú de consola-escoja un número");
             System.out.println("1 para agregar jugadas del juego (en orden)");
             System.out.println("2 para ver las fichas capturadas");
@@ -45,7 +78,7 @@ public class ChessMain {
             System.out.println("6 para imprimir una jugada");
             System.out.println("7 para eliminar jugada");
             System.out.println("8 para cerrar consola");
-            
+            System.out.println("--------------------------------------------");
 
             int m;
             m = reader.nextInt();
@@ -60,10 +93,13 @@ public class ChessMain {
                     }
                     k = true;
                     break;
-                case 2:                    
+                case 2: 
+                    Adicionar mensajero = new Adicionar(inputs);
+                    mensajero.MostrarSplit();
                     k = true;
                     break;
                 case 3:                    
+                    Corregir();
                     k = true;
                     break;
                 case 4:                    
@@ -71,11 +107,14 @@ public class ChessMain {
                     k = true;
                     break;
                 case 5:                    
+                    Mostrar();
                     k = true;
                     break;
                 case 6:                    
+                    UnaJugada(jugador_blancas, jugador_negras);
                     break;
-                case 7:                    
+                case 7:
+                    Eliminar();
                     break;
                 default:
                     k = false;
@@ -109,13 +148,51 @@ public class ChessMain {
         System.out.println(inputs);
 
     }
-        public static void Mostrar(String nombre1, String nombre2){
-        int it=16;
-        for(int y = 16; y < inputs.size()-2; y++){            
-            System.out.println("Jugada "+(it-15)+" ficha blanca - "+nombre1+": "+inputs.get(it)+" ficha negra - "+nombre2+": "+inputs.get(it+1));
-            it=y+2;
+    
+    public static void Corregir() {
+        System.out.println("Ingrese el número de la partida a corregir:");
+        int corregirPartida = reader.nextInt();
+        System.out.println("Ingrese la nueva jugada de fichas blancas:");
+        String nuevaB = reader.next();
+        System.out.println("Ingrese la nueva jugada de fichas negras:");
+        String nuevaN = reader.next();
+
+        switch (corregirPartida) {
+            case 1:
+                inputs.set(16, nuevaB);
+                inputs.set(17, nuevaN);
+                break;
+            case 2:
+                inputs.set(18, nuevaB);
+                inputs.set(19, nuevaN);
+                break;
+            default:
+                inputs.set((16 + (2 * corregirPartida - 2)), nuevaB);
+                inputs.set((16 + (2 * corregirPartida - 1)), nuevaN);
+                break;
         }
+
+        System.out.println(inputs);
     }
+    
+    
+    
+    public static void Mostrar(){
+        int ronda = 1;
+        if(inputs.isEmpty()){
+           System.out.println("No hay rondas registradas aún en esta partida");  
+       } else {
+           System.out.println("----------------------------------");
+           for (int i=16; i <= (inputs.size() - 2) ; i+=2){
+               System.out.println("++++++++++++++++++++++++++");
+               System.out.println(ronda + ". " + inputs.get(i) + " " + inputs.get(i + 2));
+               ronda += 1 ;
+           }
+           System.out.println("----------------------------------");
+       }
+    }
+        
+    
     
     public static void UnaJugada(String Nombre1, String Nombre2){
         System.out.println("Ingrese el número de la partida que desea ver:");
@@ -136,7 +213,29 @@ public class ChessMain {
                 jugadaNegra=inputs.get((16 + (2 * una - 1)));
                 break;
         }
-         System.out.println("Fichas Blancas - "+Nombre1+" :"+jugadaBlanca+". Fichas negras - "+ Nombre2+" :"+jugadaNegra);
+         System.out.println("Fichas Blancas - " + Nombre1 + " :"+ jugadaBlanca + ". Fichas negras - "+ Nombre2 + " :" + jugadaNegra);
+    }
+    
+    public static void Eliminar(){
+        System.out.println("Ingrese el número de la partida a eliminar:");
+        int idx_eliminar = reader.nextInt();
+        switch (idx_eliminar) {
+            case 1:
+                inputs.remove(16);
+                inputs.remove(17);
+                break;
+            case 2:
+                inputs.remove(18);
+                inputs.remove(19);
+                break;
+            default:
+                inputs.remove((16 + (2 * idx_eliminar - 2)));
+                inputs.remove((16 + (2 * idx_eliminar - 1)));
+                break;
+        }
+    
+    
+    
     }
     
 }
